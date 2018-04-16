@@ -7,4 +7,8 @@ import javax.swing.*;
  */
 
 public abstract class Platform extends Collideable {
+
+    public Platform()   {
+        super(3);
+    }
 }
