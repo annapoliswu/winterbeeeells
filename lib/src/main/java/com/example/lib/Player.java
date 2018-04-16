@@ -1,5 +1,6 @@
 package com.example.lib;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 /**
  * Created by Anna on 4/15/2018.
@@ -20,16 +21,17 @@ public class Player extends Collideable{
         return score;
     }
 
-    public void Player(){
+    public Player(){
         name = "none";
         score = 0;
 
         setXVelocity(10);
         setYVelocity(-10);
+
     }
 
-    public void Player(String nameValue){
-        this.Player();
+    public Player(String nameValue){
+        this();
         name = nameValue;
     }
 
@@ -40,7 +42,6 @@ public class Player extends Collideable{
         g.fillRect(200, 150, 400, 250); //(x posn, y posn, width, height)
 
     }
-
 
 
 
