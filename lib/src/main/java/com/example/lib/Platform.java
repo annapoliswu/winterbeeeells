@@ -6,9 +6,12 @@ import javax.swing.*;
  * Created by Anna on 4/15/2018.
  */
 
-public abstract class Platform extends Collideable {
+public class Platform extends Collideable {
 
-    public Platform()   {
-        super(3);
+    public Platform(double a, double b)   {
+        super(2);
+        setLocation(a, b);
+        setSize(15,15);
+        setVelocity(0,0);
     }
 }

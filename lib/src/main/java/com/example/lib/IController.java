@@ -13,10 +13,14 @@ public class IController implements MouseMotionListener, MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
+
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
+        System.out.println(mouseEvent.getSource());
+        ;
+
     }
 
     @Override

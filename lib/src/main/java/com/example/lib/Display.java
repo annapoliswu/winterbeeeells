@@ -14,6 +14,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * Created by DoDo on 4/16/18.
  */
@@ -47,15 +49,40 @@ public class Display {
         canvas.createBufferStrategy(2);
         bs = canvas.getBufferStrategy();
 
+        IController con = new IController();
+
+
     }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void clearCanvas() {
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+        g.clearRect(0,0, WINDOWWIDTH,WINDOWWIDTH);
+    }
+
 
     public void draw(Collideable a)  {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        g.clearRect(0,0, WINDOWWIDTH,WINDOWWIDTH);
 
         g.setColor(color[a.getID()]);
-        g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
+        g.fillRect((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
         g.dispose();
+        //bs.show();
+    }
+
+    public void draw(ArrayList<? extends Collideable> e)  {
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+        for (Collideable ent : e)   {
+            g.setColor(color[ent.getID()]);
+            g.fillRect((int)ent.getX(), (int)ent.getY(), ent.getWidth(), ent.getHeight());
+        }
+        g.dispose();
+    }
+
+    public void paintCanvas()   {
         bs.show();
     }
 
@@ -74,9 +101,10 @@ public class Display {
         }
         if (y <= 0) {
             y = 0;
-        } else if (y >= cHeight)    {
+        } else if (y >= cHeight) {
             y = cHeight;
         }
+
         return new Point(x,y);
     }
 }
