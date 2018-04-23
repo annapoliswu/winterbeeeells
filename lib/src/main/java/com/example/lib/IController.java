@@ -11,8 +11,13 @@ import java.awt.event.MouseMotionListener;
 
 public class IController implements MouseMotionListener, MouseListener{
 
+    public static boolean mouseDown;
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
+        System.out.println("clicked");
+        mouseDown = true;
+
     }
 
     @Override
@@ -33,6 +38,7 @@ public class IController implements MouseMotionListener, MouseListener{
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
+
     }
 
     @Override

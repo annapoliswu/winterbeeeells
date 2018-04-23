@@ -4,10 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Winterbells.iml" filepath="$PROJECT_DIR$/Winterbells.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/winterbeeeells.iml" filepath="$PROJECT_DIR$/winterbeeeells.iml" />
+      <module fileurl="file://C:\Users\Anna\AndroidStudioProjects\Winterbells\winterbeeeells.iml" filepath="C:\Users\Anna\AndroidStudioProjects\Winterbells\winterbeeeells.iml" />
     </modules>
   </component>
 </project>

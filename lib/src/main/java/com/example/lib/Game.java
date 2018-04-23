@@ -9,21 +9,27 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class Game {
+import static com.example.lib.Display.WINDOWHEIGHT;
+import static com.example.lib.Display.WINDOWWIDTH;
+
+
+public class Game extends IController{
 
     Display display;
-    IController controller;
+    //IController controller;
 
     Platform[] platforms;
     Enemy[] enemies;
     Player player;
-
+    static int fps = 0; //counts up in nanosec?, resets to 0 at 1 sec
 
     public void initGame()  {
 
         display = new Display();
-        controller = new IController();
+      //  controller = new IController();
         player = new Player();
+
+
     }
 
     public void gameloop()  {
@@ -32,7 +38,8 @@ public class Game {
         final long TARGET = 1000000000 / FPS;
         boolean gameRunning = true;
         long lastFpsTime = 0;
-        int fps = 0;
+
+
 
         while(gameRunning)  {
             long now = System.nanoTime();
@@ -46,6 +53,7 @@ public class Game {
                 lastFpsTime = 0;
                 fps = 0;
             }
+
             update(delta);
             display.draw(player);
 
@@ -56,18 +64,23 @@ public class Game {
 
     public void update(double Delta)   {
         //ALL TIME SENSITIVE STUFF MUST MULTIPLY BY DELTA
+
         Point mouse = display.getMouse();
-        player.setLocation((int)mouse.getX(), 450);
+
+        //should probably be in getMouse or display
+        if(fps%50 == 0 && player.inBounds(WINDOWWIDTH , WINDOWHEIGHT)){ // EVERY.05milisecond?
+            player.setLocation((int)mouse.getX(), player.getY()+ 30);
+        } else{
+            player.setLocation((int)mouse.getX(), player.getY());
+        }
+
+        //System.out.println(seconds);
 
     }
 
-    public void run() {
-        display.draw(player);
 
-        Point mouse = display.getMouse();
-        player.setLocation((int)mouse.getX(), 450);
 
-    }
+
 
     public static void main(String args[]) {
         Game game = new Game();
