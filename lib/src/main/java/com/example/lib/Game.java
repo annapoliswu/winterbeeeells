@@ -3,38 +3,35 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
-
-import static com.example.lib.Display.WINDOW_HEIGHT;
-import static com.example.lib.Display.WINDOW_WIDTH;
-
+import java.lang.*;
 
 public class Game extends IController{
 
-    Display display;
-    ArrayList<Platform> platforms;
-    ArrayList<Enemy> enemies;
-    Player player;
-    ArrayList<Bullet> bullets;
+    private Display display;
+    private User user;
 
-    final int WIDTH = 480;
-    final int HEIGHT = 640;
-    final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
-    final double ACCEL = .15;
+    private ArrayList<Platform> platforms;
+    private ArrayList<Enemy> enemies;
+    private ArrayList<Bullet> bullets;
+    private Player player;
 
-    static int fps = 0; //counts up in nanosec?, resets to 0 at 1 sec
 
-    private void initGame()  {
+    private final int WIDTH = 480;
+    private final int HEIGHT = 640;
+    private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
+    private final double ACCEL = .15;
 
+
+    private void initGame(User u)  {
+        user = u;
         display = new Display();
         player = new Player();
-        platforms = new ArrayList<Platform>();
-        bullets = new ArrayList<Bullet>();
+        platforms = new ArrayList<>();
+        bullets = new ArrayList<>();
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-
-            }
+            public void mouseClicked(MouseEvent mouseEvent) {}
 
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
@@ -42,19 +39,13 @@ public class Game extends IController{
             }
 
             @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-
-            }
+            public void mouseReleased(MouseEvent mouseEvent) {}
 
             @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-
-            }
+            public void mouseEntered(MouseEvent mouseEvent) {}
 
             @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-            }
+            public void mouseExited(MouseEvent mouseEvent) {}
         });
 
     }
@@ -79,16 +70,19 @@ public class Game extends IController{
             if (lastFpsTime >= 1000000000)  {
                 lastFpsTime = 0;
                 fps = 0;
-
             }
 
             platformTimer += delta;
+
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
             }
 
             update(delta);
+            if (checkLost(player))  {
+                return;
+            }
             display.clearCanvas();
             display.draw(player);
             display.draw(platforms);
@@ -109,12 +103,27 @@ public class Game extends IController{
 
         move(delta, bullets);
         move(delta, platforms);
-        for (Collideable e : platforms) {
-            if (e.checkCollision(player)) {
+        Iterator<Platform> i = platforms.iterator();
+        while(i.hasNext()) {
+            Platform plat = i.next();
+            //increases velocity when collides (player jumps)
+            if (plat.checkCollision(player)) {
                 player.setVelocity(player.getXVelocity(), -5);
+
+                user.incrementScore();
+                i.remove();
+                /*
+                if(!e.getJumpedOn()){
+                    e.setJumpedOn();
+                    user.incrementScore();
+                }
+                */
             }
         }
+    }
 
+    private boolean checkLost(Player p) {
+        return p.getY() > HEIGHT;
     }
 
     private void move(double delta, ArrayList<? extends Collideable> list)   {
@@ -125,9 +134,9 @@ public class Game extends IController{
             double y = ent.getY() + ent.getYVelocity() * delta;
             ent.setLocation(x,y);
 
+            //Despawns after leaving the screen
             if (!Collideable.checkBounds(ent, WIDTH, HEIGHT))   {
                 i.remove();
-                System.out.println(list.size());
             }
         }
     }
@@ -136,27 +145,20 @@ public class Game extends IController{
         yVelocity += ACCEL * delta;
         return yVelocity;
     }
-/*
-        //should probably be in getMouse or display
-        if(fps%50 == 0 && player.checkBounds(WINDOWWIDTH , WINDOWHEIGHT)){ // EVERY.05milisecond?
-            player.setLocation((int)mouse.getX(), player.getY()+ 30);
-        } else{
-            player.setLocation((int)mouse.getX(), player.getY());
-        }
 
-        //System.out.println(seconds);
 
-    }
 
-*/
     private Platform spawnPlatform()    {
         int a = (int) ((Math.random() * WIDTH *.95) + 1);
         return new Platform(a , 10);
     }
     public static void main(String args[]) {
         Game game = new Game();
-        game.initGame();
+
+        User gamePlayer = new User("PlaceHolder Name");
+        game.initGame(gamePlayer);
         game.gameloop();
+        System.out.println(gamePlayer.getScore());
     }
 
 

@@ -8,6 +8,8 @@ import javax.swing.*;
 
 public class Player extends Collideable{
 
+
+
     public Player(){
         super(Collideable.PLAYER_ID);
         this.setLocation(240,200);
@@ -15,9 +17,8 @@ public class Player extends Collideable{
         this.setSize(40,40);
     }
 
-    public void jump(){
-//
-    }
+
+
 
 
 }

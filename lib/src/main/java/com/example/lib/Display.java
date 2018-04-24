@@ -28,7 +28,7 @@ public class Display{
     public static int WINDOW_WIDTH = 480;
     public static int WINDOW_HEIGHT = 680;
 
-    Color[] color = {Color.BLACK, Color.BLUE, Color.CYAN, Color.RED};
+    Color[] color = {Color.BLACK, Color.BLUE, new Color(100,165,150), Color.RED};
 
     public Display(){
 
@@ -60,6 +60,7 @@ public class Display{
     public void clearCanvas() {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0,0, WINDOW_WIDTH,WINDOW_HEIGHT);
+
     }
 
 
