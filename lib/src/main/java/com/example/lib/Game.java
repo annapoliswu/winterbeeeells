@@ -69,13 +69,12 @@ public class Game extends IController{
 
         //should probably be in getMouse or display
         if(fps%50 == 0 && player.inBounds(WINDOWWIDTH , WINDOWHEIGHT)){ // EVERY.05milisecond?
-            player.setLocation((int)mouse.getX(), player.getY()+ 30);
+            player.setLocation((int)mouse.getX(), player.getY()- 2);
         } else{
             player.setLocation((int)mouse.getX(), player.getY());
         }
 
         //System.out.println(seconds);
-
     }
 
 
