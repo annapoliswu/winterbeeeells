@@ -59,6 +59,7 @@ public class Game extends IController{
             }
         });
 
+
     }
 
     private void gameloop()  {
@@ -125,7 +126,7 @@ public class Game extends IController{
                 }
             }
         }
-        System.out.println(SCORE);
+
 
 
     }

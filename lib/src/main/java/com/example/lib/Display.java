@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static com.example.lib.Game.SCORE;
+
 /**
  * Created by DoDo on 4/16/18.
  */
@@ -69,7 +71,12 @@ public class Display{
 
         g.setColor(color[a.getID()]);
         g.fillRect((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
+        g.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        g.drawString("SCORE: " + SCORE, 10, 20);
+
         g.dispose();
+
+
     }
 
     public void draw(ArrayList<? extends Collideable> e)  {
