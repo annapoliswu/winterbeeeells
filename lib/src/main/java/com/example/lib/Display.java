@@ -20,17 +20,19 @@ import java.util.ArrayList;
  * Created by DoDo on 4/16/18.
  */
 
-public class Display {
+public class Display{
     JFrame frame;
     JPanel panel;
     Canvas canvas;
     BufferStrategy bs;
-    int WINDOWWIDTH = 480;
-    int WINDOWHEIGHT = 640;
+    public static int WINDOWWIDTH = 480;
+    public static int WINDOWHEIGHT = 640;
+    IController controller;
 
     Color[] color = {Color.BLACK, Color.BLUE, Color.CYAN, Color.RED};
 
     public Display(){
+
         frame = new JFrame();
 
         frame.setPreferredSize(new Dimension(WINDOWWIDTH, WINDOWHEIGHT));
@@ -43,14 +45,12 @@ public class Display {
         panel = (JPanel) frame.getContentPane();
         panel.setPreferredSize(new Dimension(WINDOWWIDTH, WINDOWHEIGHT));
         panel.setLayout(null);
+
         canvas = new Canvas();
         canvas.setBounds(0,0, WINDOWWIDTH, WINDOWHEIGHT);
         panel.add(canvas);
         canvas.createBufferStrategy(2);
         bs = canvas.getBufferStrategy();
-
-        IController con = new IController();
-
 
     }
 
@@ -87,24 +87,31 @@ public class Display {
     }
 
     public Point getMouse() {
+        Player player = new Player();
+        int pWidth = player.getWidth();
         Point mouse = MouseInfo.getPointerInfo().getLocation();
         Point screen = canvas.getLocationOnScreen();
         int cWidth = canvas.getWidth();
         int cHeight = canvas.getHeight();
-        int x = (int)(mouse.getX() - screen.getX());
-        int y = (int)(mouse.getY() - screen.getY());
+        int x = (int)(mouse.getX() - screen.getX() - (.5 * pWidth) );
+        int y = (int)(mouse.getY() - screen.getY() - (.5 * pWidth) );
+
+        //sets in bounds of canvas
 
         if (x <= 0)    {
             x = 0;
-        } else if (x >= cWidth)   {
-            x = cWidth;
+        } else if (x >= cWidth - pWidth) {
+            x = cWidth - pWidth;
         }
         if (y <= 0) {
             y = 0;
-        } else if (y >= cHeight) {
+        }
+        else if (y >= cHeight)    {
             y = cHeight;
         }
 
         return new Point(x,y);
     }
+
+
 }

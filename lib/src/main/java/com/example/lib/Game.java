@@ -10,10 +10,13 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class Game {
+import static com.example.lib.Display.WINDOWHEIGHT;
+import static com.example.lib.Display.WINDOWWIDTH;
+
+
+public class Game extends IController{
 
     Display display;
-
     ArrayList<Platform> platforms;
     ArrayList<Enemy> enemies;
     Player player;
@@ -22,9 +25,11 @@ public class Game {
     final int WIDTH = 480;
     final int HEIGHT = 640;
     final int PLATFORM_SPAWN_RATE =(int)(1.5 * 60);
+    final int ACCEL = 5;
 
+    static int fps = 0; //counts up in nanosec?, resets to 0 at 1 sec
 
-    public void initGame()  {
+    private void initGame()  {
 
         display = new Display();
         player = new Player();
@@ -57,9 +62,10 @@ public class Game {
 
             }
         });
+
     }
 
-    public void gameloop()  {
+    private void gameloop()  {
         long lastLoopTime = System.nanoTime();
         final int FPS = 60;
         final long TARGET = 1000000000 / FPS;
@@ -67,6 +73,7 @@ public class Game {
         long lastFpsTime = 0;
         int fps = 0;
         double platformTimer = 0;
+
 
         while(gameRunning)  {
             long now = System.nanoTime();
@@ -78,6 +85,7 @@ public class Game {
             if (lastFpsTime >= 1000000000)  {
                 lastFpsTime = 0;
                 fps = 0;
+                System.out.println(platformTimer);
 
             }
 
@@ -86,7 +94,6 @@ public class Game {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
             }
-
 
             update(delta);
             display.clearCanvas();
@@ -100,20 +107,22 @@ public class Game {
         }
     }
 
-    public void update(double delta)   {
+    private void update(double delta)   {
         //ALL TIME SENSITIVE STUFF MUST MULTIPLY BY DELTA
+
         Point mouse = display.getMouse();
         player.setLocation((int)mouse.getX(), 450);
         move(delta, bullets);
+        move(delta, platforms);
         for (Collideable e : platforms) {
-            if (player.checkCollision(e))   {
+            if (player.checkCollision(e)) {
                 //TODO
             }
         }
 
     }
 
-    public void move(double delta, ArrayList<? extends Collideable> list)   {
+    private void move(double delta, ArrayList<? extends Collideable> list)   {
         Iterator<? extends Collideable> i = list.iterator();
         while(i.hasNext()) {
             Collideable ent = i.next();
@@ -127,6 +136,24 @@ public class Game {
         }
     }
 
+    private double calcGravity(double delta, Collideable e)  {
+        double y = e.getYVelocity();
+        y += ACCEL * delta;
+        return y;
+    }
+/*
+        //should probably be in getMouse or display
+        if(fps%50 == 0 && player.checkBounds(WINDOWWIDTH , WINDOWHEIGHT)){ // EVERY.05milisecond?
+            player.setLocation((int)mouse.getX(), player.getY()+ 30);
+        } else{
+            player.setLocation((int)mouse.getX(), player.getY());
+        }
+
+        //System.out.println(seconds);
+
+    }
+
+*/
     private Platform spawnPlatform()    {
         int a = (int) ((Math.random() * WIDTH) + 1);
         return new Platform(a, 20);

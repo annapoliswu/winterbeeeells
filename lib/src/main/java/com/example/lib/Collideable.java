@@ -2,6 +2,8 @@ package com.example.lib;
 import java.awt.*;
 import javax.swing.*;
 
+import static com.example.lib.Display.WINDOWWIDTH;
+
 /**
  * Created by Anna on 4/15/2018.
  */
@@ -10,8 +12,8 @@ public abstract class Collideable {
 
     final public static int PLAYER_ID = 1;
 
-    private int xVelocity;
-    private int yVelocity;
+    private double xVelocity;
+    private double yVelocity;
     private double x;
     private double y;
     private int width;
@@ -51,15 +53,15 @@ public abstract class Collideable {
         return this.y;
     }
 
-    public void setVelocity(int a, int b) {
+    public void setVelocity(double a, double b) {
         this.xVelocity = a;
         this.yVelocity = b;
     }
 
-    public int getXVelocity(){
+    public double getXVelocity(){
         return xVelocity;
     }
-    public int getYVelocity(){
+    public double getYVelocity(){
         return yVelocity;
     }
 
