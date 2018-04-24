@@ -25,9 +25,8 @@ public class Display{
     JPanel panel;
     Canvas canvas;
     BufferStrategy bs;
-    public static int WINDOWWIDTH = 480;
-    public static int WINDOWHEIGHT = 640;
-    IController controller;
+    public static int WINDOW_WIDTH = 480;
+    public static int WINDOW_HEIGHT = 680;
 
     Color[] color = {Color.BLACK, Color.BLUE, Color.CYAN, Color.RED};
 
@@ -35,7 +34,7 @@ public class Display{
 
         frame = new JFrame();
 
-        frame.setPreferredSize(new Dimension(WINDOWWIDTH, WINDOWHEIGHT));
+        frame.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.pack();
@@ -43,11 +42,11 @@ public class Display{
         frame.setVisible(true);
 
         panel = (JPanel) frame.getContentPane();
-        panel.setPreferredSize(new Dimension(WINDOWWIDTH, WINDOWHEIGHT));
+        panel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         panel.setLayout(null);
 
         canvas = new Canvas();
-        canvas.setBounds(0,0, WINDOWWIDTH, WINDOWHEIGHT);
+        canvas.setBounds(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
         panel.add(canvas);
         canvas.createBufferStrategy(2);
         bs = canvas.getBufferStrategy();
@@ -60,7 +59,7 @@ public class Display{
 
     public void clearCanvas() {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        g.clearRect(0,0, WINDOWWIDTH,WINDOWWIDTH);
+        g.clearRect(0,0, WINDOW_WIDTH,WINDOW_HEIGHT);
     }
 
 
@@ -70,7 +69,6 @@ public class Display{
         g.setColor(color[a.getID()]);
         g.fillRect((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
         g.dispose();
-        //bs.show();
     }
 
     public void draw(ArrayList<? extends Collideable> e)  {
@@ -97,7 +95,6 @@ public class Display{
         int y = (int)(mouse.getY() - screen.getY() - (.5 * pWidth) );
 
         //sets in bounds of canvas
-
         if (x <= 0)    {
             x = 0;
         } else if (x >= cWidth - pWidth) {

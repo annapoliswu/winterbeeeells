@@ -11,7 +11,7 @@ public class Platform extends Collideable {
     public Platform(double a, double b)   {
         super(2);
         setLocation(a, b);
-        setSize(15,15);
-        setVelocity(0,5f);
+        setSize(20,20);
+        setVelocity(0,2.5);
     }
 }
