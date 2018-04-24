@@ -79,7 +79,6 @@ public class Game extends IController{
             if (lastFpsTime >= 1000000000)  {
                 lastFpsTime = 0;
                 fps = 0;
-                System.out.println(platformTimer);
 
             }
 
@@ -128,6 +127,7 @@ public class Game extends IController{
 
             if (!Collideable.checkBounds(ent, WIDTH, HEIGHT))   {
                 i.remove();
+                System.out.println(list.size());
             }
         }
     }
