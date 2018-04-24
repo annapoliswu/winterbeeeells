@@ -60,7 +60,7 @@ public class Display{
 
     public void clearCanvas() {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        g.clearRect(0,0, WINDOWWIDTH,WINDOWWIDTH);
+        g.clearRect(0,0, WINDOWWIDTH,WINDOWHEIGHT);
     }
 
 

@@ -85,11 +85,12 @@ public class Game extends IController{
             if (lastFpsTime >= 1000000000)  {
                 lastFpsTime = 0;
                 fps = 0;
-                System.out.println(platformTimer);
+               // System.out.println();
 
             }
 
             platformTimer += delta;
+
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
@@ -116,7 +117,7 @@ public class Game extends IController{
         move(delta, platforms);
         for (Collideable e : platforms) {
             if (player.checkCollision(e)) {
-                //TODO
+                System.out.println("craaash");
             }
         }
 
