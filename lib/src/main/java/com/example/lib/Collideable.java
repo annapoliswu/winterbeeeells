@@ -2,7 +2,6 @@ package com.example.lib;
 import java.awt.*;
 import javax.swing.*;
 
-import static com.example.lib.Display.WINDOWWIDTH;
 
 /**
  * Created by Anna on 4/15/2018.
@@ -66,10 +65,10 @@ public abstract class Collideable {
     }
 
     public boolean checkCollision(Collideable e){
-        double x = this.getX();
-        double y = this.getY();
-        double x2 = this.getX() + this.getWidth();
-        double y2 = this.getY() + this.getHeight();
+        double x = this.getX() - this.getWidth()/2 - e.getWidth()/2;
+        double y = this.getY() - this.getHeight()/2 - e.getHeight()/2;
+        double x2 = this.getX() + this.getWidth()/2 + e.getWidth()/2;
+        double y2 = this.getY() + this.getHeight()/2 + e.getHeight()/2;
 
         if (e.getX() > x && e.getX() < x2)  {
             if (e.getY() > y && e.getY() < y2)  {
