@@ -81,7 +81,7 @@ public class Game extends IController{
             }
 
             update(delta);
-            if (checkLost(player))  {
+            if (checkLost(player))  {   //ends game
                 return;
             }
             display.clearCanvas();
@@ -115,9 +115,14 @@ public class Game extends IController{
                 if(!plat.getJumpedOn()){
                     plat.setJumpedOn(true);
                     user.incrementScore();
-                    i.remove(); // do something w/ jumpLimit maybe
                 }
-
+            }
+            else if (!plat.checkCollision(player) && plat.getJumpedOn()){
+                plat.setJumpedOn(false);
+                plat.setJumpLimit(plat.getJumpLimit()-1);
+            }
+            else if(plat.getJumpLimit()==0) {
+                i.remove(); // do something w/ jumpLimit maybe
             }
         }
     }
