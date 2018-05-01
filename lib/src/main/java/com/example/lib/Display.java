@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
 
+import sun.applet.Main;
+
+
 /**
  * Created by DoDo on 4/16/18.
  */
@@ -63,6 +66,15 @@ public class Display{
 
     }
 
+    public void draw(User u){
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        g.drawString("SCORE: " + u.getScore(), 10, 20);
+        g.dispose();
+
+    }
 
     public void draw(Collideable a)  {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();

@@ -48,6 +48,7 @@ public class Game extends IController{
             public void mouseExited(MouseEvent mouseEvent) {}
         });
 
+
     }
 
     private void gameloop()  {
@@ -80,13 +81,14 @@ public class Game extends IController{
             }
 
             update(delta);
-            if (checkLost(player))  {
+            if (checkLost(player))  {   //ends game
                 return;
             }
             display.clearCanvas();
             display.draw(player);
             display.draw(platforms);
             display.draw(bullets);
+            display.draw(user);
             display.paintCanvas();
 
             try {Thread.sleep( (lastLoopTime-System.nanoTime() + TARGET/1000000));}
@@ -94,30 +96,33 @@ public class Game extends IController{
         }
     }
 
-    private void update(double delta)   {
+    private void update(double delta) {
         //ALL TIME SENSITIVE STUFF MUST MULTIPLY BY DELTA
 
         Point mouse = display.getMouse();
         player.setVelocity(player.getXVelocity(), calcGravity(delta, player.getYVelocity()));
-        player.setLocation((int)mouse.getX(), player.getY() + player.getYVelocity() * delta);
+        player.setLocation((int) mouse.getX(), player.getY() + player.getYVelocity() * delta);
 
         move(delta, bullets);
         move(delta, platforms);
         Iterator<Platform> i = platforms.iterator();
-        while(i.hasNext()) {
+        while (i.hasNext()) {
             Platform plat = i.next();
             //increases velocity when collides (player jumps)
             if (plat.checkCollision(player)) {
                 player.setVelocity(player.getXVelocity(), -5);
 
-                user.incrementScore();
-                i.remove();
-                /*
-                if(!e.getJumpedOn()){
-                    e.setJumpedOn();
+                if(!plat.getJumpedOn()){
+                    plat.setJumpedOn(true);
                     user.incrementScore();
                 }
-                */
+            }
+            else if (!plat.checkCollision(player) && plat.getJumpedOn()){
+                plat.setJumpedOn(false);
+                plat.setJumpLimit(plat.getJumpLimit()-1);
+            }
+            else if(plat.getJumpLimit()==0) {
+                i.remove(); // do something w/ jumpLimit maybe
             }
         }
     }

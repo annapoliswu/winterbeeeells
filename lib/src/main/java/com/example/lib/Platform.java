@@ -10,6 +10,7 @@ public class Platform extends Collideable {
 
     private boolean jumpedOn;
     private final double FALL_VELOCITY = 3;
+    private int jumpLimit;
 
     public Platform(double a, double b)   {
         super(2);
@@ -17,6 +18,7 @@ public class Platform extends Collideable {
         setSize((int)(Math.random()*30 + 20), 20);
         setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
+        jumpLimit = 2;
     }
 
     public Platform(double a, double b, int width, int height) {
@@ -25,14 +27,22 @@ public class Platform extends Collideable {
         setSize(width, height);
         setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
+        jumpLimit = 2;
     }
 
     public boolean getJumpedOn(){
         return jumpedOn;
     }
 
-    public void setJumpedOn(){
-        jumpedOn = true;
+    public void setJumpedOn(boolean a){
+        jumpedOn = a;
+    }
+    public int getJumpLimit(){
+        return jumpLimit;
+    }
+
+    public void setJumpLimit(int limit){
+        jumpLimit = limit;
     }
 
 }
