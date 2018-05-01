@@ -9,12 +9,13 @@ import javax.swing.*;
 public class Platform extends Collideable {
 
     private boolean jumpedOn;
+    private final double FALL_VELOCITY = 3;
 
     public Platform(double a, double b)   {
         super(2);
         setLocation(a, b);
         setSize((int)(Math.random()*30 + 20), 20);
-        setVelocity(0,2.5);
+        setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
     }
 
@@ -22,7 +23,7 @@ public class Platform extends Collideable {
         super(2);
         setLocation(a,b);
         setSize(width, height);
-        setVelocity(0,2.5);
+        setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
     }
 

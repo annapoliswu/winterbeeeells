@@ -18,8 +18,8 @@ public class Game extends IController{
 
     private final int WIDTH = 480;
     private final int HEIGHT = 640;
-    private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
-    private final double ACCEL = .15;
+    private final int PLATFORM_SPAWN_RATE =(int)(.8 * 60);
+    private final double ACCEL = .16;
 
 
     private void initGame(User u)  {
