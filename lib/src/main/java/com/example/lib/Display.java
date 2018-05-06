@@ -31,7 +31,7 @@ public class Display{
     public static int WINDOW_WIDTH = 480;
     public static int WINDOW_HEIGHT = 680;
 
-    Color[] color = {Color.BLACK, Color.BLUE, new Color(100,165,150), Color.RED};
+    Color[] color = {Color.RED, Color.BLUE, new Color(100,165,150), Color.BLACK };
 
     public Display(){
 
@@ -78,19 +78,22 @@ public class Display{
 
     public void draw(Collideable a)  {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-
         g.setColor(color[a.getID()]);
-        g.fillRect((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
-        g.dispose();
+
+        if(a instanceof Enemy){
+            g.fillOval((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
+            g.dispose();
+        } else {
+            g.fillRect((int) a.getX(), (int) a.getY(), a.getWidth(), a.getHeight());
+            g.dispose();
+        }
     }
 
+
     public void draw(ArrayList<? extends Collideable> e)  {
-        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         for (Collideable ent : e)   {
-            g.setColor(color[ent.getID()]);
-            g.fillRect((int)ent.getX(), (int)ent.getY(), ent.getWidth(), ent.getHeight());
+            draw(ent);
         }
-        g.dispose();
     }
 
     public void paintCanvas()   {

@@ -26,6 +26,12 @@ public abstract class Collideable {
     public int getID() {
         return this.id;
     }
+
+    //replace later
+    public void setID(int i) {
+        id = i;
+    }
+
     public void setSize(int a,int b)    {
         this.width = a;
         this.height = b;
@@ -64,6 +70,8 @@ public abstract class Collideable {
         return yVelocity;
     }
 
+
+    /*
     public boolean checkCollision(Collideable e){
         double x = this.getX() - this.getWidth()/2 - e.getWidth()/2;
         double y = this.getY() - this.getHeight()/2 - e.getHeight()/2;
@@ -77,12 +85,66 @@ public abstract class Collideable {
         }
         return false;
     }
+*/
 
-    public static boolean checkBounds(Collideable e, int WIDTH, int HEIGHT)   {
-        if (e.getX() < 0 || e.getX() > WIDTH)   {
+
+//true if top Collideable e collides with bottom of this
+    public boolean checkBottomCollision(Collideable e){
+        double leftx = this.getX() - this.getWidth()/2;
+        double rightx = this.getX() + this.getWidth()/2;
+        double topy = this.getY() - this.getHeight()/2;
+        double boty = this.getY() + this.getHeight()/2;
+
+        double leftx2 = e.getX() - e.getWidth()/2;
+        double rightx2 = e.getX() + e.getWidth()/2;
+        double topy2 = e.getY() - e.getHeight()/2;
+        double boty2 = e.getY() + e.getHeight()/2;
+
+        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
+            if (topy2 < boty &&  topy2 > topy) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //true if bottom of Collideable e collides with top of this
+    public boolean checkTopCollision(Collideable e){
+        double leftx = this.getX() - this.getWidth()/2;
+        double rightx = this.getX() + this.getWidth()/2;
+        double topy = this.getY() - this.getHeight()/2;
+        double boty = this.getY() + this.getHeight()/2;
+
+        double leftx2 = e.getX() - e.getWidth()/2;
+        double rightx2 = e.getX() + e.getWidth()/2;
+        double topy2 = e.getY() - e.getHeight()/2;
+        double boty2 = e.getY() + e.getHeight()/2;
+
+        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
+            if (boty2 > topy &&  boty2 < boty  )  {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //does not work if player is bigger than platform
+    public boolean checkCollision(Collideable e){
+        return this.checkBottomCollision(e)||this.checkTopCollision(e);
+    }
+
+
+
+    //true if height in bounds
+    public static boolean checkHeightBound(Collideable e, int HEIGHT)   {
+        if (e.getY() < 0 || e.getY() > HEIGHT)  {
             return false;
         }
-        if (e.getY() < 0 || e.getY() > HEIGHT)  {
+        return true;
+    }
+
+    public static boolean checkWidthBound(Collideable e, int WIDTH)   {
+        if (e.getX() < 0 || e.getX() > WIDTH)  {
             return false;
         }
         return true;

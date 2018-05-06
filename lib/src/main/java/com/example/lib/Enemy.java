@@ -1,9 +1,21 @@
 package com.example.lib;
 
-public abstract class Enemy extends Collideable {
+public class Enemy extends Collideable {
+    private int hp;
 
-    public Enemy() {
+    public Enemy(double a, double b) {
         super(2);
+        setLocation(a, b);
+        setSize(20, 20);
+        setVelocity(0,2.5);
+        hp = 1;
+        setID(0);
     }
 
+    public int getHP(){
+        return hp;
+    }
+    public void setHP(int newHP){
+        hp = newHP;
+    }
 }

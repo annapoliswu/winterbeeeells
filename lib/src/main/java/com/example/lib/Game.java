@@ -28,6 +28,7 @@ public class Game extends IController{
         player = new Player();
         platforms = new ArrayList<>();
         bullets = new ArrayList<>();
+        enemies = new ArrayList<>();
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
@@ -78,16 +79,21 @@ public class Game extends IController{
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
+               // platforms.add(new HPlatform(100, 20));
             }
+
+            enemies.add(new Enemy(20,30) );
 
             update(delta);
             if (checkLost(player))  {   //ends game
                 return;
             }
+
             display.clearCanvas();
             display.draw(player);
             display.draw(platforms);
             display.draw(bullets);
+            display.draw(enemies);
             display.draw(user);
             display.paintCanvas();
 
@@ -109,23 +115,36 @@ public class Game extends IController{
         while (i.hasNext()) {
             Platform plat = i.next();
             //increases velocity when collides (player jumps)
-            if (plat.checkCollision(player)) {
+            if(plat instanceof HPlatform){
+
+                if(plat.checkBottomCollision(player)) {
+                    player.setVelocity(player.getXVelocity(), 5);
+                } else if (plat.checkTopCollision(player)){
+                    player.setVelocity(player.getXVelocity(), -5);
+                }
+
+            }else if (plat.checkCollision(player)) {
                 player.setVelocity(player.getXVelocity(), -5);
 
                 if(!plat.getJumpedOn()){
                     plat.setJumpedOn(true);
                     user.incrementScore();
                 }
-            }
-            else if (!plat.checkCollision(player) && plat.getJumpedOn()){
+
+            } else if (!plat.checkCollision(player) && plat.getJumpedOn()){
                 plat.setJumpedOn(false);
                 plat.setJumpLimit(plat.getJumpLimit()-1);
-            }
-            else if(plat.getJumpLimit()==0) {
+
+            } else if(plat.getJumpLimit() == 1){
+                plat.setID(0);
+
+            } else if(plat.getJumpLimit()==0) {
                 i.remove(); // do something w/ jumpLimit maybe
             }
         }
     }
+
+
 
     private boolean checkLost(Player p) {
         return p.getY() > HEIGHT;
@@ -139,8 +158,12 @@ public class Game extends IController{
             double y = ent.getY() + ent.getYVelocity() * delta;
             ent.setLocation(x,y);
 
+            if(ent instanceof HPlatform && !Collideable.checkWidthBound(ent, WIDTH)){
+                ent.setVelocity(-1* ent.getXVelocity(), ent.getYVelocity());
+            }
+
             //Despawns after leaving the screen
-            if (!Collideable.checkBounds(ent, WIDTH, HEIGHT))   {
+            if (!Collideable.checkHeightBound(ent, HEIGHT))   {
                 i.remove();
             }
         }
@@ -154,9 +177,19 @@ public class Game extends IController{
 
 
     private Platform spawnPlatform()    {
-        int a = (int) ((Math.random() * WIDTH *.95) + 1);
-        return new Platform(a , 10);
+        int init = (int)(Math.random() *100);
+        int a = (int) ((Math.random() * WIDTH * .95) + 1);
+        if (init <= 70) {
+            return new Platform(a, 10);
+        } else{
+            if(init <= 80){
+                return new HPlatform(a, 10, Math.random()*3 +1 );
+            }else{
+                return new HPlatform(a, 10, Math.random()* (-3) - 1 );
+            }
+        }
     }
+
     public static void main(String args[]) {
         Game game = new Game();
 
