@@ -29,6 +29,7 @@ public class Game extends IController{
         platforms = new ArrayList<>();
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
+        enemies.add(new Enemy(250,20) );
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
@@ -82,7 +83,6 @@ public class Game extends IController{
                // platforms.add(new HPlatform(100, 20));
             }
 
-            enemies.add(new Enemy(20,30) );
 
             update(delta);
             if (checkLost(player))  {   //ends game
@@ -123,7 +123,7 @@ public class Game extends IController{
                     player.setVelocity(player.getXVelocity(), -5);
                 }
 
-            }else if (plat.checkCollision(player)) {
+            } else if (plat.checkCollision(player)) {
                 player.setVelocity(player.getXVelocity(), -5);
 
                 if(!plat.getJumpedOn()){
@@ -142,6 +142,28 @@ public class Game extends IController{
                 i.remove(); // do something w/ jumpLimit maybe
             }
         }
+
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+        Iterator<Bullet>bulletIterator = bullets.iterator();
+        while (enemyIterator.hasNext()) {
+            Enemy e = enemyIterator.next();
+            if (player.checkCollision(e)){
+                System.out.println("do somethingggg");
+            }
+
+           while(bulletIterator.hasNext()){
+                Bullet b = bulletIterator.next();
+                if(e.checkCollision(b)){
+                    e.setHP(e.getHP()-1);
+                }
+           }
+
+           if(e.getHP()== 0){
+               enemyIterator.remove();
+           }
+        }
+
+
     }
 
 
@@ -189,6 +211,8 @@ public class Game extends IController{
             }
         }
     }
+
+
 
     public static void main(String args[]) {
         Game game = new Game();

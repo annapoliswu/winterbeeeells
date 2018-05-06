@@ -88,15 +88,15 @@ public abstract class Collideable {
 */
 
 
-//true if top Collideable e collides with bottom of this
+    //true if top Collideable e collides with bottom of this
     public boolean checkBottomCollision(Collideable e){
-        double leftx = this.getX() - this.getWidth()/2;
-        double rightx = this.getX() + this.getWidth()/2;
+        double leftx = this.getX();
+        double rightx = this.getX() + this.getWidth();
         double topy = this.getY() - this.getHeight()/2;
         double boty = this.getY() + this.getHeight()/2;
 
-        double leftx2 = e.getX() - e.getWidth()/2;
-        double rightx2 = e.getX() + e.getWidth()/2;
+        double leftx2 = e.getX();
+        double rightx2 = e.getX() + e.getWidth();
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
@@ -110,13 +110,13 @@ public abstract class Collideable {
 
     //true if bottom of Collideable e collides with top of this
     public boolean checkTopCollision(Collideable e){
-        double leftx = this.getX() - this.getWidth()/2;
-        double rightx = this.getX() + this.getWidth()/2;
+        double leftx = this.getX();
+        double rightx = this.getX() + this.getWidth();
         double topy = this.getY() - this.getHeight()/2;
         double boty = this.getY() + this.getHeight()/2;
 
-        double leftx2 = e.getX() - e.getWidth()/2;
-        double rightx2 = e.getX() + e.getWidth()/2;
+        double leftx2 = e.getX();
+        double rightx2 = e.getX() + e.getWidth();
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
