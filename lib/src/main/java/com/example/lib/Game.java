@@ -111,25 +111,22 @@ public class Game extends IController{
 
         move(delta, bullets);
         move(delta, platforms);
+
         Iterator<Platform> i = platforms.iterator();
         while (i.hasNext()) {
             Platform plat = i.next();
             //increases velocity when collides (player jumps)
-            if(plat instanceof HPlatform){
+           if (plat.checkCollision(player)) {
 
-                if(plat.checkBottomCollision(player)) {
-                    player.setVelocity(player.getXVelocity(), 5);
-                } else if (plat.checkTopCollision(player)){
-                    player.setVelocity(player.getXVelocity(), -5);
-                }
+               if(plat instanceof HPlatform && plat.checkBottomCollision(player)) {
+                   player.setVelocity(player.getXVelocity(), 5);
+               } else
+                   player.setVelocity(player.getXVelocity(), -5);
 
-            } else if (plat.checkCollision(player)) {
-                player.setVelocity(player.getXVelocity(), -5);
-
-                if(!plat.getJumpedOn()){
+               if(!plat.getJumpedOn()){
                     plat.setJumpedOn(true);
                     user.incrementScore();
-                }
+               }
 
             } else if (!plat.checkCollision(player) && plat.getJumpedOn()){
                 plat.setJumpedOn(false);
@@ -145,6 +142,7 @@ public class Game extends IController{
 
         Iterator<Enemy> enemyIterator = enemies.iterator();
         Iterator<Bullet>bulletIterator = bullets.iterator();
+
         while (enemyIterator.hasNext()) {
             Enemy e = enemyIterator.next();
             if (player.checkCollision(e)){
