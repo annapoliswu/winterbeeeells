@@ -5,7 +5,7 @@ import java.awt.event.MouseListener;
 import java.util.*;
 import java.lang.*;
 
-public class Game extends IController{
+public class Game{
 
     private Display display;
     private User user;
@@ -14,6 +14,10 @@ public class Game extends IController{
     private ArrayList<Enemy> enemies;
     private ArrayList<Bullet> bullets;
     private Player player;
+
+    private Iterator<Platform> platformIterator;
+    private Iterator<Bullet>bulletIterator;
+    private Iterator<Enemy> enemyIterator;
 
 
     private final int WIDTH = 480;
@@ -112,9 +116,9 @@ public class Game extends IController{
         move(delta, bullets);
         move(delta, platforms);
 
-        Iterator<Platform> i = platforms.iterator();
-        while (i.hasNext()) {
-            Platform plat = i.next();
+        platformIterator = platforms.iterator();
+        while (platformIterator.hasNext()) {
+            Platform plat = platformIterator.next();
             //increases velocity when collides (player jumps)
            if (plat.checkCollision(player)) {
 
@@ -136,12 +140,12 @@ public class Game extends IController{
                 plat.setID(0);
 
             } else if(plat.getJumpLimit()==0) {
-                i.remove(); // do something w/ jumpLimit maybe
+                platformIterator.remove(); // do something w/ jumpLimit maybe
             }
         }
 
-        Iterator<Enemy> enemyIterator = enemies.iterator();
-        Iterator<Bullet>bulletIterator = bullets.iterator();
+        enemyIterator = enemies.iterator();
+        bulletIterator = bullets.iterator();
 
         while (enemyIterator.hasNext()) {
             Enemy e = enemyIterator.next();
@@ -178,6 +182,7 @@ public class Game extends IController{
             double y = ent.getY() + ent.getYVelocity() * delta;
             ent.setLocation(x,y);
 
+            //bug where Hplat gets stuck on right edge sometimes
             if(ent instanceof HPlatform && !Collideable.checkWidthBound(ent, WIDTH)){
                 ent.setVelocity(-1* ent.getXVelocity(), ent.getYVelocity());
             }
@@ -197,12 +202,12 @@ public class Game extends IController{
 
 
     private Platform spawnPlatform()    {
-        int init = (int)(Math.random() *100);
+        int init = (int)(Math.random() * 100);
         int a = (int) ((Math.random() * WIDTH * .95) + 1);
-        if (init <= 70) {
+        if (init <= 90) {
             return new Platform(a, 10);
         } else{
-            if(init <= 80){
+            if(init <= 95){
                 return new HPlatform(a, 10, Math.random()*3 +1 );
             }else{
                 return new HPlatform(a, 10, Math.random()* (-3) - 1 );
