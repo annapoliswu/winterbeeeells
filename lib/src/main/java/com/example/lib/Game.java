@@ -115,6 +115,7 @@ public class Game{
 
         move(delta, bullets);
         move(delta, platforms);
+        move(delta, enemies);
 
         platformIterator = platforms.iterator();
         while (platformIterator.hasNext()) {
@@ -149,25 +150,31 @@ public class Game{
 
         while (enemyIterator.hasNext()) {
             Enemy e = enemyIterator.next();
+
             if (player.checkCollision(e)){
-                System.out.println("do somethingggg");
+                System.out.println("do somethingggg?");
             }
 
-           while(bulletIterator.hasNext()){
+            while(bulletIterator.hasNext()){
                 Bullet b = bulletIterator.next();
                 if(e.checkCollision(b)){
                     e.setHP(e.getHP()-1);
                 }
-           }
+            }
 
            if(e.getHP()== 0){
+               user.incrementScore(20);
                enemyIterator.remove();
            }
         }
 
 
-    }
 
+
+
+
+
+    }
 
 
     private boolean checkLost(Player p) {
@@ -178,12 +185,10 @@ public class Game{
         Iterator<? extends Collideable> i = list.iterator();
         while(i.hasNext()) {
             Collideable ent = i.next();
-            double x = ent.getX() + ent.getXVelocity() * delta;
-            double y = ent.getY() + ent.getYVelocity() * delta;
-            ent.setLocation(x,y);
+            ent.move(delta);
 
-            //bug where Hplat gets stuck on right edge sometimes
-            if(ent instanceof HPlatform && !Collideable.checkWidthBound(ent, WIDTH)){
+            //bug where Hplat gets stuck on right side sometimes
+            if((ent instanceof HPlatform || ent instanceof Enemy) && !Collideable.checkWidthBound(ent, WIDTH)){
                 ent.setVelocity(-1* ent.getXVelocity(), ent.getYVelocity());
             }
 

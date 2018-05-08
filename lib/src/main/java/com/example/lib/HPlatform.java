@@ -9,17 +9,14 @@ public class HPlatform extends Platform {
         super(2,2);
         setLocation(a, b);
         setSize((int)(Math.random()*30 + 50), 20);
-        setVelocity(2.5, 2.5);
-        setJumpLimit(2);
-        setID(3);
+        setJumpLimit(5);
     }
     public HPlatform(double a, double b, double v)   {
         super(2,2);
         setLocation(a, b);
         setSize((int)(Math.random()*30 + 50), 20);
-        setVelocity(v, 2.5);
-        setJumpLimit(2);
-        setID(3);
+        setVelocity(v, this.getYVelocity());
+        setJumpLimit(5);
     }
 }
 

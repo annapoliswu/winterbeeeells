@@ -7,7 +7,7 @@ public class Enemy extends Collideable {
         super(2);
         setLocation(a, b);
         setSize(40, 40);
-        setVelocity(0,2.5);
+        setVelocity(2.5,0);
         hp = 1;
         setID(0);
     }

@@ -15,7 +15,7 @@ public class Platform extends Collideable {
         super(2);
         setLocation(a, b);
         setSize((int)(Math.random()*30 + 20), 20);
-        setVelocity(0,2.5);
+        setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
         jumpLimit = 3;
     }
@@ -24,7 +24,7 @@ public class Platform extends Collideable {
         super(2);
         setLocation(a,b);
         setSize(width, height);
-        setVelocity(0,2.5);
+        setVelocity(0,FALL_VELOCITY);
         jumpedOn = false;
         jumpLimit = 3;
     }

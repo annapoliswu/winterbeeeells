@@ -24,4 +24,8 @@ public class User {
     public void incrementScore()    {
         this.score++;
     }
+
+    public void incrementScore(int x)    {
+        score = this.score + x;
+    }
 }

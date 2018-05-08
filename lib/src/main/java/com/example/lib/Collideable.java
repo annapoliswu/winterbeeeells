@@ -10,6 +10,7 @@ import javax.swing.*;
 public abstract class Collideable {
 
     final public static int PLAYER_ID = 1;
+    protected final double FALL_VELOCITY = 2.5;
 
     private double xVelocity;
     private double yVelocity;
@@ -144,9 +145,23 @@ public abstract class Collideable {
     }
 
     public static boolean checkWidthBound(Collideable e, int WIDTH)   {
-        if (e.getX() < 0 || e.getX()+e.getWidth() > WIDTH)  {
+        if (e.getX() < 0 || (e.getX() + e.getWidth() ) > WIDTH)  {
             return false;
-        }
+        }else
         return true;
     }
+
+    public void move(double delta){
+        double x = this.getX() + this.getXVelocity() * delta;
+        double y = this.getY() + this.getYVelocity() * delta;
+        this.setLocation(x,y);
+    }
+
+
+
 }
+
+
+
+
+

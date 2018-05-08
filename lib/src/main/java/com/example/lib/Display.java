@@ -80,9 +80,17 @@ public class Display{
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.setColor(color[a.getID()]);
 
+        Graphics2D b = (Graphics2D) bs.getDrawGraphics();
+        b.setColor(Color.RED);
+
         if(a instanceof Enemy){
             g.fillOval((int)a.getX(), (int)a.getY(), a.getWidth(), a.getHeight());
             g.dispose();
+        } else if (a instanceof HPlatform){
+            g.fillRect((int) a.getX(), (int) a.getY(), a.getWidth(), a.getHeight()/2);
+            b.fillRect((int) a.getX(), (int) a.getY()+a.getHeight()/2, a.getWidth(), a.getHeight()/2);
+            g.dispose();
+            b.dispose();
         } else {
             g.fillRect((int) a.getX(), (int) a.getY(), a.getWidth(), a.getHeight());
             g.dispose();
