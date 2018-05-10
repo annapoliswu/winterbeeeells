@@ -1,5 +1,8 @@
 package com.example.lib;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.*;
 
 
@@ -89,6 +92,7 @@ public abstract class Collideable {
 */
 
 
+
     //true if top Collideable e collides with bottom of this
     public boolean checkBottomCollision(Collideable e){
         double leftx = this.getX();
@@ -101,8 +105,8 @@ public abstract class Collideable {
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
-        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
-            if (topy2 < boty &&  topy2 > topy) {
+        if ((leftx2 >= leftx && leftx2 <= rightx) || (rightx2 >= leftx && rightx2 <= rightx ) || (leftx2 >= leftx && rightx2 <= rightx))  {
+            if (topy2 <= boty &&  topy2 >= topy ) {
                 return true;
             }
         }
@@ -121,8 +125,8 @@ public abstract class Collideable {
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
-        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
-            if (boty2 > topy &&  boty2 < boty  )  {
+        if ((leftx2 >= leftx && leftx2 <= rightx) || (rightx2 >= leftx && rightx2 <= rightx ) || (leftx2 >= leftx && rightx2 <= rightx))  {
+            if (boty2 >= topy &&  boty2 <= boty  )  {
                 return true;
             }
         }
@@ -131,23 +135,23 @@ public abstract class Collideable {
 
     //does not work if player is bigger than platform
     public boolean checkCollision(Collideable e){
-        return this.checkBottomCollision(e)||this.checkTopCollision(e);
+        return (this.checkBottomCollision(e)||this.checkTopCollision(e));
     }
 
 
 
     //true if height in bounds
-    public static boolean checkHeightBound(Collideable e, int HEIGHT)   {
-        if (e.getY() < 0 || e.getY() > HEIGHT)  {
+    public static boolean checkHeightBound(Collideable e)   {
+        if (e.getY() >= Display.WINDOW_HEIGHT)  {
             return false;
         }
         return true;
     }
 
-    public static boolean checkWidthBound(Collideable e, int WIDTH)   {
-        if (e.getX() < 0 || (e.getX() + e.getWidth() ) > WIDTH)  {
+    public static boolean checkWidthBound(Collideable e)   {
+        if (e.getX() < 0 || (e.getX() + e.getWidth() ) >= Display.WINDOW_WIDTH)  {
             return false;
-        }else
+        }
         return true;
     }
 
@@ -155,8 +159,8 @@ public abstract class Collideable {
         double x = this.getX() + this.getXVelocity() * delta;
         double y = this.getY() + this.getYVelocity() * delta;
         this.setLocation(x,y);
-    }
 
+    }
 
 
 }

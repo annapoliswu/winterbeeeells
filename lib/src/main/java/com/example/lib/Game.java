@@ -1,3 +1,5 @@
+//Steven Chen, Anna Wu
+
 package com.example.lib;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -20,10 +22,13 @@ public class Game{
     private Iterator<Enemy> enemyIterator;
 
 
-    private final int WIDTH = 480;
-    private final int HEIGHT = 640;
-    private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
+    private final int WIDTH = Display.WINDOW_WIDTH;
+    private final int HEIGHT = Display.WINDOW_HEIGHT;
     private final double ACCEL = .15;
+    private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
+    private final int ENEMY_JUMP_RATE =(int)(3 * 60);
+
+
 
 
     private void initGame(User u)  {
@@ -33,7 +38,7 @@ public class Game{
         platforms = new ArrayList<>();
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        enemies.add(new Enemy(250,20) );
+        enemies.add(new JEnemy(250,20) );
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
@@ -65,6 +70,7 @@ public class Game{
         long lastFpsTime = 0;
         int fps = 0;
         double platformTimer = 0;
+        double enemyTimer = 0;
 
 
         while(gameRunning)  {
@@ -80,13 +86,28 @@ public class Game{
             }
 
             platformTimer += delta;
+            enemyTimer += delta;
+            int rand = (int) (Math.random()*100);
 
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
-               // platforms.add(new HPlatform(100, 20));
+                if(platforms.size() > 2) {
+                    Platform p = platforms.get(platforms.size()-1);
+                    enemies.add(new JEnemy(p.getX(), p.getY() - p.getHeight() -30));
+                }
             }
 
+
+            if (enemyTimer > ENEMY_JUMP_RATE) {
+                enemyTimer %= ENEMY_JUMP_RATE;
+                    for (Enemy e : enemies) {
+                    //    e.setVelocity(e.getXVelocity(), -2);
+                    }
+            //every spawn e with p location, some seconds up velocity to jump, in update affected by gravity if off plat, same Yvelo of plat if on.
+
+
+            }
 
             update(delta);
             if (checkLost(player))  {   //ends game
@@ -104,6 +125,7 @@ public class Game{
             try {Thread.sleep( (lastLoopTime-System.nanoTime() + TARGET/1000000));}
             catch(Exception e) {}
         }
+        display.endscreen(user);
     }
 
     private void update(double delta) {
@@ -118,62 +140,65 @@ public class Game{
         move(delta, enemies);
 
         platformIterator = platforms.iterator();
-        while (platformIterator.hasNext()) {
-            Platform plat = platformIterator.next();
-            //increases velocity when collides (player jumps)
-           if (plat.checkCollision(player)) {
-
-               if(plat instanceof HPlatform && plat.checkBottomCollision(player)) {
-                   player.setVelocity(player.getXVelocity(), 5);
-               } else
-                   player.setVelocity(player.getXVelocity(), -5);
-
-               if(!plat.getJumpedOn()){
-                    plat.setJumpedOn(true);
-                    user.incrementScore();
-               }
-
-            } else if (!plat.checkCollision(player) && plat.getJumpedOn()){
-                plat.setJumpedOn(false);
-                plat.setJumpLimit(plat.getJumpLimit()-1);
-
-            } else if(plat.getJumpLimit() == 1){
-                plat.setID(0);
-
-            } else if(plat.getJumpLimit()==0) {
-                platformIterator.remove(); // do something w/ jumpLimit maybe
-            }
-        }
-
         enemyIterator = enemies.iterator();
         bulletIterator = bullets.iterator();
 
-        while (enemyIterator.hasNext()) {
-            Enemy e = enemyIterator.next();
 
-            if (player.checkCollision(e)){
-                System.out.println("do somethingggg?");
-            }
+        while(platformIterator.hasNext()){
+            Platform plat = platformIterator.next();
+            //increases velocity when collides (player jumps)
 
-            while(bulletIterator.hasNext()){
-                Bullet b = bulletIterator.next();
-                if(e.checkCollision(b)){
-                    e.setHP(e.getHP()-1);
+            if (plat.checkCollision(player)) {
+
+                if (plat instanceof HPlatform && plat.checkBottomCollision(player)) {
+                    player.setVelocity(player.getXVelocity(), 5);
+                } else
+                    player.setVelocity(player.getXVelocity(), -5);
+
+                if (!plat.getJumpedOn()) {
+                    plat.setJumpedOn(true);
+                    user.incrementScore();
                 }
+
+            } else if (!plat.checkCollision(player) && plat.getJumpedOn()) {
+                plat.setJumpedOn(false);
+                plat.setJumpLimit(plat.getJumpLimit() - 1);
+
+            } else if (plat.getJumpLimit() == 1) {
+                plat.setID(0);
+
+            } else if (plat.getJumpLimit() == 0) {
+                platformIterator.remove(); // do something w/ jumpLimit maybe
             }
 
-           if(e.getHP()== 0){
-               user.incrementScore(20);
-               enemyIterator.remove();
-           }
+            while(enemyIterator.hasNext()){
+                Enemy e = enemyIterator.next();
+
+                if (plat.checkCollision(e)) { // en not colliding w/ platform???? or maybe w specific plat, only at bottom
+                    e.setVelocity(plat.getXVelocity(), -6);
+                    System.out.print("true");
+                }else
+                    e.setVelocity(e.getXVelocity(), calcGravity(delta,e.getYVelocity()));
+
+                if (e.checkCollision(player)) {
+                    System.out.println("do somethingggg?");
+                }
+                while(bulletIterator.hasNext()){
+                   Bullet b = bulletIterator.next();
+                    if (e.checkCollision(b)) {
+                        e.setHP(e.getHP() - 1);
+                        bulletIterator.remove();
+                    }
+                }
+
+                if (e.getHP() == 0) {
+                    user.incrementScore(20);
+                    enemyIterator.remove();
+                }
+
+            }
+
         }
-
-
-
-
-
-
-
     }
 
 
@@ -187,13 +212,8 @@ public class Game{
             Collideable ent = i.next();
             ent.move(delta);
 
-            //bug where Hplat gets stuck on right side sometimes
-            if((ent instanceof HPlatform || ent instanceof Enemy) && !Collideable.checkWidthBound(ent, WIDTH)){
-                ent.setVelocity(-1* ent.getXVelocity(), ent.getYVelocity());
-            }
-
             //Despawns after leaving the screen
-            if (!Collideable.checkHeightBound(ent, HEIGHT))   {
+            if (!Collideable.checkHeightBound(ent))   {
                 i.remove();
             }
         }
@@ -203,8 +223,6 @@ public class Game{
         yVelocity += ACCEL * delta;
         return yVelocity;
     }
-
-
 
     private Platform spawnPlatform()    {
         int init = (int)(Math.random() * 100);
@@ -219,6 +237,8 @@ public class Game{
             }
         }
     }
+
+    //has to ref platforms, on a platform?
 
 
 

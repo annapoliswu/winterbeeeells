@@ -76,6 +76,11 @@ public class Display{
 
     }
 
+    public void endscreen(User u){
+        clearCanvas();
+        draw(u);
+    }
+
     public void draw(Collideable a)  {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.setColor(color[a.getID()]);

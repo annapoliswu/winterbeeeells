@@ -18,6 +18,19 @@ public class HPlatform extends Platform {
         setVelocity(v, this.getYVelocity());
         setJumpLimit(5);
     }
+
+    public void move(double delta){
+        super.move(delta);
+        if ( !Collideable.checkWidthBound(this)) {
+            //changes velocity, doesn't change posn fast enough,so can still be outside bound flip-flopping velo?
+            if (this.getXVelocity() > 0) {
+                this.setLocation(Display.WINDOW_WIDTH - this.getWidth(), this.getY());
+            } else if (this.getXVelocity() < 0) {
+                this.setLocation(0, this.getY());
+            }this.setVelocity(-1*this.getXVelocity(), this.getYVelocity());
+        }
+    }
+
 }
 
 
