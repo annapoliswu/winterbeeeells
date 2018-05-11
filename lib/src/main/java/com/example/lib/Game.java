@@ -188,10 +188,6 @@ public class Game{
             ent.move(delta);
 
             //bug where Hplat gets stuck on right side sometimes
-            if((ent instanceof HPlatform || ent instanceof Enemy) && !Collideable.checkWidthBound(ent, WIDTH)){
-                ent.setVelocity(-1* ent.getXVelocity(), ent.getYVelocity());
-            }
-
             //Despawns after leaving the screen
             if (!Collideable.checkHeightBound(ent, HEIGHT))   {
                 i.remove();

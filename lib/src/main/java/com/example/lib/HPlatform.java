@@ -18,6 +18,18 @@ public class HPlatform extends Platform {
         setVelocity(v, this.getYVelocity());
         setJumpLimit(5);
     }
+    public void move(double delta){
+        super.move(delta);
+        if(!Collideable.checkWidthBound(this, Display.WINDOW_WIDTH)){
+            this.setVelocity(-1* this.getXVelocity(), this.getYVelocity());
+        }
+        //
+    }
+
+
+
+
+
 }
 
 
