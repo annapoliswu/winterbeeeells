@@ -187,7 +187,6 @@ public class Game{
             Collideable ent = i.next();
             ent.move(delta);
 
-            //bug where Hplat gets stuck on right side sometimes
             //Despawns after leaving the screen
             if (!Collideable.checkHeightBound(ent, HEIGHT))   {
                 i.remove();
@@ -205,10 +204,10 @@ public class Game{
     private Platform spawnPlatform()    {
         int init = (int)(Math.random() * 100);
         int a = (int) ((Math.random() * WIDTH * .95) + 1);
-        if (init <= 90) {
+        if (init <= 60) {
             return new Platform(a, 10);
         } else{
-            if(init <= 95){
+            if(init <= 90){
                 return new HPlatform(a, 10, Math.random()*3 +1 );
             }else{
                 return new HPlatform(a, 10, Math.random()* (-3) - 1 );
