@@ -20,8 +20,8 @@ public class Game{
     private Iterator<Enemy> enemyIterator;
 
 
-    private final int WIDTH = 480;
-    private final int HEIGHT = 640;
+    private final int WIDTH = Display.WINDOW_WIDTH;
+    private final int HEIGHT = Display.WINDOW_HEIGHT;
     private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
     private final double ACCEL = .15;
 
@@ -167,12 +167,6 @@ public class Game{
                enemyIterator.remove();
            }
         }
-
-
-
-
-
-
 
     }
 

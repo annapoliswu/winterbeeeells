@@ -101,7 +101,7 @@ public abstract class Collideable {
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
-        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
+        if ( !((leftx2 < leftx && rightx2 < leftx) || (rightx2 > rightx && leftx2 > rightx)) )  {
             if (topy2 < boty &&  topy2 > topy) {
                 return true;
             }
@@ -121,7 +121,8 @@ public abstract class Collideable {
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
-        if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ))  {
+       //if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ) || (rightx2 < rightx && leftx2 > leftx)){
+        if ( !((leftx2 < leftx && rightx2 < leftx) || (rightx2 > rightx && leftx2 > rightx)) )  {
             if (boty2 > topy &&  boty2 < boty  )  {
                 return true;
             }
@@ -129,11 +130,10 @@ public abstract class Collideable {
         return false;
     }
 
-    //does not work if player is bigger than platform
+    //FIXED works if player is bigger than platform
     public boolean checkCollision(Collideable e){
         return this.checkBottomCollision(e)||this.checkTopCollision(e);
     }
-
 
 
     //true if height in bounds
