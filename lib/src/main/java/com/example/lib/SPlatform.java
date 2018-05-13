@@ -23,5 +23,18 @@ public class SPlatform extends Platform {
             setID(4);
         }
 
+        public void onCollision(Player player) {
+            if (this.checkTopCollision(player)) {
+                player.setLocation(player.getX(), this.getY() - this.getHeight());
+                this.setJumpedOn(true);
+            } else if (this.checkBottomCollision(player)) {
+                player.setLocation(player.getX(), this.getY() + this.getHeight());
+                this.setJumpedOn(true);
+            } else if(this.getJumpedOn()) {
+                this.setJumpedOn(false);
+                this.setJumpLimit(this.getJumpLimit() - 1);
+                player.setVelocity(player.getXVelocity(), -5);
+            }
+        }
 
 }

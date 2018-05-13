@@ -14,7 +14,7 @@ public class Player extends Collideable{
         super(Collideable.PLAYER_ID);
         this.setLocation(240,200);
         this.setVelocity(0,-10);
-        this.setSize(40,40);
+        this.setSize(20,20);
     }
 
 

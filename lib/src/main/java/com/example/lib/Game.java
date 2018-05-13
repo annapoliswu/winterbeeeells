@@ -120,36 +120,16 @@ public class Game{
         platformIterator = platforms.iterator();
         while (platformIterator.hasNext()) {
             Platform plat = platformIterator.next();
-            //increases velocity when collides (player jumps)
-           if (plat.checkCollision(player)) {
-               if(plat instanceof HPlatform && plat.checkBottomCollision(player)) {
-                   player.setVelocity(player.getXVelocity(), 5);
-               } else if(plat instanceof SPlatform && plat.checkTopCollision(player)){
-                   player.setLocation(player.getX(), plat.getY()-plat.getHeight());
-               } else if(plat instanceof SPlatform && plat.checkBottomCollision(player)){
-                   player.setLocation(player.getX(), plat.getY()+plat.getHeight());
-               }
-               else
-                   player.setVelocity(player.getXVelocity(), -5);
 
-               if(!plat.getJumpedOn()){
-                    plat.setJumpedOn(true);
-                    user.incrementScore();
-               }
-
-            } else if (!plat.checkCollision(player) && plat.getJumpedOn()){
-                plat.setJumpedOn(false);
-                plat.setJumpLimit(plat.getJumpLimit()-1);
-
+            if(!plat.getJumpedOn() && plat.checkCollision(player)) {
+                if (!(plat instanceof HPlatform && plat.checkBottomCollision(player))) {
+                       user.incrementScore();
+                }
             }
-             else if(!(plat instanceof SPlatform) && plat.getJumpLimit() == 1){
-                plat.setID(0);
+            plat.onCollision(player);
 
-            } else if(plat.getJumpLimit()==0) {
+            if(plat.getJumpLimit()==0) {
                 platformIterator.remove(); // do something w/ jumpLimit maybe
-               if(plat instanceof SPlatform){
-                   player.setVelocity(player.getXVelocity(), -5);
-               }
             }
         }
 

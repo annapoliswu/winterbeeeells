@@ -11,37 +11,53 @@ public class Platform extends Collideable {
     private boolean jumpedOn;
     private int jumpLimit;
 
-    public Platform(double a, double b)   {
+    public Platform(double a, double b) {
         super(2);
         setLocation(a, b);
-        setSize((int)(Math.random()*30 + 20), 20);
-        setVelocity(0,FALL_VELOCITY);
+        setSize((int) (Math.random() * 30 + 20), 20);
+        setVelocity(0, FALL_VELOCITY);
         jumpedOn = false;
         jumpLimit = 3;
     }
 
     public Platform(double a, double b, int width, int height) {
         super(2);
-        setLocation(a,b);
+        setLocation(a, b);
         setSize(width, height);
-        setVelocity(0,FALL_VELOCITY);
+        setVelocity(0, FALL_VELOCITY);
         jumpedOn = false;
         jumpLimit = 3;
     }
 
-    public boolean getJumpedOn(){
+    public boolean getJumpedOn() {
         return jumpedOn;
     }
 
-    public void setJumpedOn(boolean a){
+    public void setJumpedOn(boolean a) {
         jumpedOn = a;
     }
-    public int getJumpLimit(){
+
+    public int getJumpLimit() {
         return jumpLimit;
     }
 
-    public void setJumpLimit(int limit){
+    public void setJumpLimit(int limit) {
         jumpLimit = limit;
     }
+
+    //jumpLimit changes only work if player smaller than platform?? -check collision func later
+    public void onCollision(Player player) {
+        if (this.checkCollision(player)) {
+            player.setVelocity(player.getXVelocity(), -5);
+            this.setJumpedOn(true);
+        } else if (!this.checkCollision(player) && this.getJumpedOn()){
+            this.setJumpedOn(false);
+            this.setJumpLimit(this.getJumpLimit()-1);
+        } else if (this.jumpLimit == 1) {
+            this.setID(0);
+        }
+    }
+
+
 
 }

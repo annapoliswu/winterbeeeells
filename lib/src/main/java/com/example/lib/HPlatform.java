@@ -29,7 +29,17 @@ public class HPlatform extends Platform {
             }
             this.setVelocity(-1 * this.getXVelocity(), this.getYVelocity());
         }
+    }
 
+    public void onCollision(Player player) {
+       super.onCollision(player);
+        if(this.checkTopCollision(player)) {
+            player.setVelocity(player.getXVelocity(), -5);
+            this.setJumpedOn(true);
+        }
+        else if(this.checkBottomCollision(player)) {
+            player.setVelocity(player.getXVelocity(), 5);
+        }
     }
 
 
