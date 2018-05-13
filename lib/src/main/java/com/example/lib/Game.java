@@ -188,9 +188,9 @@ public class Game{
         int a = (int) ((Math.random() * WIDTH * .95) + 1);
         if (init <= 60) {
             return new Platform(a, 10);
-        } else if(init <= 70) {
+        } else if(init <= 60) {
             return new HPlatform(a, 10, Math.random() * 3 + 1);
-        }else if ((init <= 80) ){
+        }else if ((init <= 60) ){
             return new HPlatform(a, 10, Math.random()* (-3) - 1 );
         } else
             return new SPlatform(a, 10);

@@ -28,11 +28,11 @@ public class SPlatform extends Platform {
                 player.setLocation(player.getX(), this.getY() - this.getHeight());
                 this.setJumpedOn(true);
             } else if (this.checkBottomCollision(player)) {
-                player.setLocation(player.getX(), this.getY() + this.getHeight());
+                player.setLocation(player.getX(), this.getY() + this.getHeight()-2);
                 this.setJumpedOn(true);
-            } else if(this.getJumpedOn()) {
+            } else if (this.getJumpedOn()){
                 this.setJumpedOn(false);
-                this.setJumpLimit(this.getJumpLimit() - 1);
+                this.setJumpLimit(this.getJumpLimit()-1);
                 player.setVelocity(player.getXVelocity(), -5);
             }
         }
