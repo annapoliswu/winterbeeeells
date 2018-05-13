@@ -122,10 +122,14 @@ public class Game{
             Platform plat = platformIterator.next();
             //increases velocity when collides (player jumps)
            if (plat.checkCollision(player)) {
-
                if(plat instanceof HPlatform && plat.checkBottomCollision(player)) {
                    player.setVelocity(player.getXVelocity(), 5);
-               } else
+               } else if(plat instanceof SPlatform && plat.checkTopCollision(player)){
+                   player.setLocation(player.getX(), plat.getY()-plat.getHeight());
+               } else if(plat instanceof SPlatform && plat.checkBottomCollision(player)){
+                   player.setLocation(player.getX(), plat.getY()+plat.getHeight());
+               }
+               else
                    player.setVelocity(player.getXVelocity(), -5);
 
                if(!plat.getJumpedOn()){
@@ -137,11 +141,15 @@ public class Game{
                 plat.setJumpedOn(false);
                 plat.setJumpLimit(plat.getJumpLimit()-1);
 
-            } else if(plat.getJumpLimit() == 1){
+            }
+             else if(!(plat instanceof SPlatform) && plat.getJumpLimit() == 1){
                 plat.setID(0);
 
             } else if(plat.getJumpLimit()==0) {
                 platformIterator.remove(); // do something w/ jumpLimit maybe
+               if(plat instanceof SPlatform){
+                   player.setVelocity(player.getXVelocity(), -5);
+               }
             }
         }
 
@@ -200,13 +208,13 @@ public class Game{
         int a = (int) ((Math.random() * WIDTH * .95) + 1);
         if (init <= 60) {
             return new Platform(a, 10);
-        } else{
-            if(init <= 90){
-                return new HPlatform(a, 10, Math.random()*3 +1 );
-            }else{
-                return new HPlatform(a, 10, Math.random()* (-3) - 1 );
-            }
-        }
+        } else if(init <= 70) {
+            return new HPlatform(a, 10, Math.random() * 3 + 1);
+        }else if ((init <= 80) ){
+            return new HPlatform(a, 10, Math.random()* (-3) - 1 );
+        } else
+            return new SPlatform(a, 10);
+
     }
 
 

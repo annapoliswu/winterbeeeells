@@ -31,7 +31,7 @@ public class Display{
     public static int WINDOW_WIDTH = 480;
     public static int WINDOW_HEIGHT = 680;
 
-    Color[] color = {Color.RED, Color.BLUE, new Color(100,165,150), Color.BLACK };
+    Color[] color = {Color.RED, Color.BLUE, new Color(100,165,150), Color.BLACK , Color.MAGENTA};
 
     public Display(){
 

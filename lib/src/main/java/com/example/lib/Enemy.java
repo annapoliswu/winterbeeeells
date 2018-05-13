@@ -19,6 +19,7 @@ public class Enemy extends Collideable {
         hp = newHP;
     }
 
+    //bounces back when meeting edge of screen
     public void move(double delta){
         super.move(delta);
         if(!Collideable.checkWidthBound(this, Display.WINDOW_WIDTH)) {
@@ -30,7 +31,6 @@ public class Enemy extends Collideable {
             }
             this.setVelocity(-1 * this.getXVelocity(), this.getYVelocity());
         }
-
     }
 
 }

@@ -28,7 +28,7 @@ public abstract class Collideable {
         return this.id;
     }
 
-    //replace later
+
     public void setID(int i) {
         id = i;
     }
@@ -73,6 +73,7 @@ public abstract class Collideable {
 
 
     /*
+   //Old collision check function
     public boolean checkCollision(Collideable e){
         double x = this.getX() - this.getWidth()/2 - e.getWidth()/2;
         double y = this.getY() - this.getHeight()/2 - e.getHeight()/2;
@@ -121,7 +122,6 @@ public abstract class Collideable {
         double topy2 = e.getY() - e.getHeight()/2;
         double boty2 = e.getY() + e.getHeight()/2;
 
-       //if ((leftx2 > leftx && leftx2 < rightx) || (rightx2 > leftx && rightx2 < rightx ) || (rightx2 < rightx && leftx2 > leftx)){
         if ( !((leftx2 < leftx && rightx2 < leftx) || (rightx2 > rightx && leftx2 > rightx)) )  {
             if (boty2 > topy &&  boty2 < boty  )  {
                 return true;
