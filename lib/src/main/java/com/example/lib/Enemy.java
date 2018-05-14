@@ -1,15 +1,13 @@
 package com.example.lib;
 
-public class Enemy extends Collideable {
+public abstract class Enemy extends Collideable {
     private int hp;
+    private int points;
 
     public Enemy(double a, double b) {
-        super(2);
+        super(0);
         setLocation(a, b);
-        setSize(40, 40);
-        setVelocity(2.5,0);
-        hp = 1;
-        setID(0);
+        setPoints(1);
     }
 
     public int getHP(){
@@ -17,6 +15,12 @@ public class Enemy extends Collideable {
     }
     public void setHP(int newHP){
         hp = newHP;
+    }
+    public int getPoints(){
+        return points;
+    }
+    public void setPoints(int pointValue){
+        points = pointValue;
     }
 
     //bounces back when meeting edge of screen

@@ -23,6 +23,7 @@ public class Game{
     private final int WIDTH = Display.WINDOW_WIDTH;
     private final int HEIGHT = Display.WINDOW_HEIGHT;
     private final int PLATFORM_SPAWN_RATE =(int)(1 * 60);
+    private final int TARGET_SPAWN_RATE = (int)(3 * 60);
     private final double ACCEL = .15;
 
 
@@ -33,7 +34,7 @@ public class Game{
         platforms = new ArrayList<>();
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        enemies.add(new Enemy(250,20) );
+        enemies.add(new Target(250,20) );
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
@@ -65,6 +66,7 @@ public class Game{
         long lastFpsTime = 0;
         int fps = 0;
         double platformTimer = 0;
+        double targetTimer = 0;
 
 
         while(gameRunning)  {
@@ -80,11 +82,18 @@ public class Game{
             }
 
             platformTimer += delta;
-
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
                 platforms.add(spawnPlatform());
                // platforms.add(new HPlatform(100, 20));
+            }
+
+            targetTimer += delta;
+            if (targetTimer > TARGET_SPAWN_RATE )    {
+                targetTimer %= TARGET_SPAWN_RATE;
+                if(!hasTarget(enemies)) {
+                    enemies.add(new Target(250, 20));
+                }
             }
 
 
@@ -139,7 +148,7 @@ public class Game{
         while (enemyIterator.hasNext()) {
             Enemy e = enemyIterator.next();
 
-            if (player.checkCollision(e)){
+            if (player.checkCollision(e)){ // not target though, change
                 System.out.println("do somethingggg?");
             }
 
@@ -151,7 +160,7 @@ public class Game{
             }
 
            if(e.getHP()== 0){
-               user.incrementScore(20);
+               user.incrementScore(e.getPoints());
                enemyIterator.remove();
            }
         }
@@ -179,6 +188,15 @@ public class Game{
     private double calcGravity(double delta, double yVelocity)  {
         yVelocity += ACCEL * delta;
         return yVelocity;
+    }
+
+    public boolean hasTarget(ArrayList<Enemy> enemies){
+        for (Enemy e : enemies){
+            if (e instanceof Target){
+                return true;
+            }
+        }
+        return false;
     }
 
 
