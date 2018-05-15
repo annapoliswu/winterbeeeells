@@ -7,6 +7,7 @@ import javax.swing.*;
  * Created by Anna on 4/15/2018.
  */
 
+//class for anything that can collide
 public abstract class Collideable {
 
     final public static int PLAYER_ID = 1;
@@ -151,6 +152,7 @@ public abstract class Collideable {
         return true;
     }
 
+    //moves Collideable based on velocities
     public void move(double delta){
         double x = this.getX() + this.getXVelocity() * delta;
         double y = this.getY() + this.getYVelocity() * delta;

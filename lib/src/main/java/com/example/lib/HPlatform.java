@@ -4,6 +4,8 @@ package com.example.lib;
  * Created by Anna on 5/1/2018.
  */
 
+
+//Horizontal platform: moves horizontally, player can not go through bottom but can jump on top
 public class HPlatform extends Platform {
     public HPlatform(double a, double b)   {
         super(2,2);
@@ -18,6 +20,9 @@ public class HPlatform extends Platform {
         setVelocity(v, this.getYVelocity());
         setJumpLimit(5);
     }
+
+
+    //movement behavior: if goes past edge of screen, flips horizontal velocity and sets location to edge of screen
     public void move(double delta){
         super.move(delta);
         if(!Collideable.checkWidthBound(this, Display.WINDOW_WIDTH)) {
@@ -31,6 +36,8 @@ public class HPlatform extends Platform {
         }
     }
 
+    //player collision behavior: jump on top, fall on bottom
+    @Override
     public void onCollision(Player player) {
        super.onCollision(player);
         if(this.checkTopCollision(player)) {

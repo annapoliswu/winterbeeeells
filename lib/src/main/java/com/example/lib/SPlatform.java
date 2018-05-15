@@ -3,6 +3,7 @@ package com.example.lib;
  * Created by Anna on 5/12/2018.
  */
 
+//Sticky platform: players held stuck to platform until they move horizontally of, does not move
 public class SPlatform extends Platform {
 
     private boolean wasOnPlat;
@@ -23,12 +24,14 @@ public class SPlatform extends Platform {
             setID(4);
         }
 
+    //player height set to platform top or bottom height when colliding with top/bottom
+    @Override
         public void onCollision(Player player) {
             if (this.checkTopCollision(player)) {
                 player.setLocation(player.getX(), this.getY() - this.getHeight());
                 this.setJumpedOn(true);
             } else if (this.checkBottomCollision(player)) {
-                player.setLocation(player.getX(), this.getY() + this.getHeight()-2);
+                player.setLocation(player.getX(), this.getY() + this.getHeight()-3);
                 this.setJumpedOn(true);
             } else if (this.getJumpedOn()){
                 this.setJumpedOn(false);

@@ -4,6 +4,7 @@ package com.example.lib;
  * Created by DoDo on 4/24/18.
  */
 
+//to store name and score for endscreen
 public class User {
     private int score;
     private String name;

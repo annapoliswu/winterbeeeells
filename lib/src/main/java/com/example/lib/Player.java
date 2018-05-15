@@ -8,8 +8,6 @@ import javax.swing.*;
 
 public class Player extends Collideable{
 
-
-
     public Player(){
         super(Collideable.PLAYER_ID);
         this.setLocation(240,200);

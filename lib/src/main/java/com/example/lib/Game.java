@@ -96,7 +96,6 @@ public class Game{
                 }
             }
 
-
             update(delta);
             if (checkLost(player))  {   //ends game
                 return;
@@ -190,6 +189,7 @@ public class Game{
         return yVelocity;
     }
 
+    //returns true if list of enemies has a target
     public boolean hasTarget(ArrayList<Enemy> enemies){
         for (Enemy e : enemies){
             if (e instanceof Target){
@@ -198,7 +198,6 @@ public class Game{
         }
         return false;
     }
-
 
 
     private Platform spawnPlatform()    {
@@ -212,7 +211,6 @@ public class Game{
             return new HPlatform(a, 10, Math.random()* (-3) - 1 );
         } else
             return new SPlatform(a, 10);
-
     }
 
 
