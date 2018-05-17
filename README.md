@@ -1,6 +1,6 @@
 # CISC181 Project
-Steven Chen
-Anna Wu
+Steven Chen (Dodobirds)  
+Anna Wu(annapoliswu)
 
 ### Android Version
 See https://github.com/Dodobirds/androidBells for android port (incomplete)
