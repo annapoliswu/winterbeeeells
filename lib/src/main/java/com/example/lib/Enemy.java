@@ -1,5 +1,10 @@
 package com.example.lib;
 
+/*
+* Represents an Enemy class in the game
+*
+* Unused in android port
+* */
 public abstract class Enemy extends Collideable {
     private int hp;
     private int points;

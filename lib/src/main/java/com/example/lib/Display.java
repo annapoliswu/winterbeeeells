@@ -1,14 +1,9 @@
 package com.example.lib;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -16,11 +11,11 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
 
-import sun.applet.Main;
-
 
 /**
  * Created by DoDo on 4/16/18.
+ * Handles all input and output of the game
+ * Draws directly to a convas on a Jframe
  */
 
 public class Display{
@@ -33,10 +28,10 @@ public class Display{
 
     Color[] color = {Color.RED, Color.BLUE, new Color(100,165,150), Color.BLACK , Color.MAGENTA, Color.ORANGE};
 
+
+    //Creates the frame and the canvas where the game is drawn to
     public Display(){
-
         frame = new JFrame();
-
         frame.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -53,17 +48,17 @@ public class Display{
         panel.add(canvas);
         canvas.createBufferStrategy(2);
         bs = canvas.getBufferStrategy();
-
     }
 
     public Canvas getCanvas() {
         return canvas;
     }
 
+
+    //refreshes canvas, should be called once per drawn tick
     public void clearCanvas() {
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0,0, WINDOW_WIDTH,WINDOW_HEIGHT);
-
     }
 
     //draws score on screen
@@ -116,11 +111,13 @@ public class Display{
             draw(ent);
         }
     }
-
+    //updates the changes made to the canvas, called once per drawn tick
     public void paintCanvas()   {
         bs.show();
     }
 
+
+    //returns the location of the mouse relative to the game window
     public Point getMouse() {
         Player player = new Player();
         int pWidth = player.getWidth();

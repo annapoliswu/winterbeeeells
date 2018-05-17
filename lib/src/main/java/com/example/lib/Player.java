@@ -4,6 +4,8 @@ import java.awt.event.*;
 import javax.swing.*;
 /**
  * Created by Anna on 4/15/2018.
+ *
+ * Represents the player in the game
  */
 
 public class Player extends Collideable{
@@ -14,9 +16,5 @@ public class Player extends Collideable{
         this.setVelocity(0,-10);
         this.setSize(20,20);
     }
-
-
-
-
 
 }

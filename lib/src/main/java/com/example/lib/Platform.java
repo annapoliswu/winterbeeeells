@@ -4,6 +4,9 @@ import javax.swing.*;
 
 /**
  * Created by Anna on 4/15/2018.
+ *
+ * Platform classes, represents a default platform the player can jump on
+ * Extends into the special platforms we created
  */
 
 public class Platform extends Collideable {
@@ -19,7 +22,7 @@ public class Platform extends Collideable {
         jumpedOn = false;
         jumpLimit = 3;
     }
-
+    //constructor allows setting the width and height instead of a randomly generated value
     public Platform(double a, double b, int width, int height) {
         this(a,b);
         setSize(width, height);
@@ -41,7 +44,8 @@ public class Platform extends Collideable {
         jumpLimit = limit;
     }
 
-    //jumpLimit changes only work if player smaller than platform?? -check collision func later
+    //Updates the platform whenever the player jumps onto it
+    //updates the jumpedOn status and the Jump limit counter
     public void onCollision(Player player) {
         if (this.checkCollision(player)) {
             player.setVelocity(player.getXVelocity(), -5);

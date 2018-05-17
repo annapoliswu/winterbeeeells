@@ -1,9 +1,10 @@
 package com.example.lib;
 /**
  * Created by Anna on 5/12/2018.
+ *
+ * A sticky platform that holds the player until they slide off the platform
  */
 
-//Sticky platform: players held stuck to platform until they move horizontally of, does not move
 public class SPlatform extends Platform {
 
     private boolean wasOnPlat;
@@ -19,7 +20,7 @@ public class SPlatform extends Platform {
             setVelocity(v, this.getYVelocity());
         }
 
-    //player height set to platform top or bottom height when colliding with top/bottom
+    //Holds the player still on collide
     @Override
         public void onCollision(Player player) {
             if (this.checkTopCollision(player)) {

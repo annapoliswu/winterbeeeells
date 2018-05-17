@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /**
  * Created by Anna on 4/15/2018.
+ * Represents anything in game that can be drawn and can collide with another object
  */
 
 //class for anything that can collide
@@ -21,6 +22,9 @@ public abstract class Collideable {
     private int height;
     private int id;
 
+    /*
+    * ID value to determine type of collideable to determine render color and game logic
+    * */
     public Collideable(int a)    {
         this.id = a;
     }
@@ -28,7 +32,6 @@ public abstract class Collideable {
     public int getID() {
         return this.id;
     }
-
 
     public void setID(int i) {
         id = i;
@@ -131,13 +134,11 @@ public abstract class Collideable {
         return false;
     }
 
-    //FIXED works if player is bigger than platform
     public boolean checkCollision(Collideable e){
-        return this.checkBottomCollision(e)||this.checkTopCollision(e);
+        return this.checkBottomCollision(e) || this.checkTopCollision(e);
     }
 
 
-    //true if height in bounds
     public static boolean checkHeightBound(Collideable e, int HEIGHT)   {
         if (e.getY() < 0 || e.getY() > HEIGHT)  {
             return false;

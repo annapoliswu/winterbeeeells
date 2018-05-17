@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 import java.util.*;
 import java.lang.*;
 
+
+//Handles all game logic
 public class Game{
 
     private Display display;
@@ -36,6 +38,9 @@ public class Game{
         enemies = new ArrayList<>();
         enemies.add(new Target(0,20) );
 
+
+        //Event listener To get mouse clicks
+        //Hacked together because the initial idea was to ignore this and port to android
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {}
@@ -70,6 +75,8 @@ public class Game{
 
 
         while(gameRunning)  {
+            //logic to ensure the game runs at 60 fps and is independent of computer specs or fps
+            //@http://www.java-gaming.org/index.php?topic=24220.0
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
             lastLoopTime = now;
@@ -80,7 +87,7 @@ public class Game{
                 lastFpsTime = 0;
                 fps = 0;
             }
-
+            //Spawns platforms
             platformTimer += delta;
             if (platformTimer > PLATFORM_SPAWN_RATE)    {
                 platformTimer %= PLATFORM_SPAWN_RATE;
@@ -88,6 +95,7 @@ public class Game{
                // platforms.add(new HPlatform(100, 20));
             }
 
+            //Spawn target
             targetTimer += delta;
             if (targetTimer > TARGET_SPAWN_RATE )    {
                 targetTimer %= TARGET_SPAWN_RATE;
@@ -96,11 +104,12 @@ public class Game{
                 }
             }
 
+            //update game
             update(delta);
             if (checkLost(player))  {   //ends game
                 return;
             }
-
+            //draw game
             display.clearCanvas();
             display.draw(player);
             display.draw(platforms);
@@ -115,8 +124,10 @@ public class Game{
         }
     }
 
+    //Moves the game forward 1 tick
     private void update(double delta) {
         //ALL TIME SENSITIVE STUFF MUST MULTIPLY BY DELTA
+        //Velocities given in pixels / frame
 
         Point mouse = display.getMouse();
         player.setVelocity(player.getXVelocity(), calcGravity(delta, player.getYVelocity()));
@@ -147,10 +158,6 @@ public class Game{
 
         while (enemyIterator.hasNext()) {
             Enemy e = enemyIterator.next();
-
-            if (player.checkCollision(e)){ // not target though, change
-                System.out.println("do somethingggg?");
-            }
 
             while(bulletIterator.hasNext()){
                 Bullet b = bulletIterator.next();
@@ -222,7 +229,6 @@ public class Game{
         User gamePlayer = new User("PlaceHolder Name");
         game.initGame(gamePlayer);
         game.gameloop();
-       // Display.drawEnd(gamePlayer);
     }
 
 

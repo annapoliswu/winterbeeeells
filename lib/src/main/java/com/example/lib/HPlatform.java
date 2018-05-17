@@ -2,10 +2,9 @@ package com.example.lib;
 
 /**
  * Created by Anna on 5/1/2018.
+ *
+ * Represents a platform that moves around horizontally can cannot be passed through from the bottom
  */
-
-
-//Horizontal platform: moves horizontally, player can not go through bottom but can jump on top
 public class HPlatform extends Platform {
     public HPlatform(double a, double b)   {
         super(a, b);
@@ -19,8 +18,8 @@ public class HPlatform extends Platform {
 
     }
 
-
     //movement behavior: if goes past edge of screen, flips horizontal velocity and sets location to edge of screen
+    @Override
     public void move(double delta){
         super.move(delta);
         if(!Collideable.checkWidthBound(this, Display.WINDOW_WIDTH)) {
