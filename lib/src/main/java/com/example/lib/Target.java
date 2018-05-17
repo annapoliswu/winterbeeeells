@@ -12,10 +12,10 @@ public class Target extends Enemy {
     //random size, points based on size
     public Target(double a, double b) {
         super(a,b);
-        int pointValue = (int)(Math.random()* 8 + 2)*5;
+        int pointValue = (int)(Math.random()* 7 + 3)*5;
         setPoints(pointValue);
         setSize(pointValue, pointValue);
-        setVelocity(2.5,0);
+        setVelocity(Math.random()*3+2,0);
         setHP(1);
         setID(5);
     }

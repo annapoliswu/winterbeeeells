@@ -21,12 +21,8 @@ public class Platform extends Collideable {
     }
 
     public Platform(double a, double b, int width, int height) {
-        super(2);
-        setLocation(a, b);
+        this(a,b);
         setSize(width, height);
-        setVelocity(0, FALL_VELOCITY);
-        jumpedOn = false;
-        jumpLimit = 3;
     }
 
     public boolean getJumpedOn() {

@@ -148,7 +148,7 @@ public abstract class Collideable {
     public static boolean checkWidthBound(Collideable e, int WIDTH)   {
         if (e.getX() < 0 || (e.getX() + e.getWidth() ) > WIDTH)  {
             return false;
-        }else
+        }
         return true;
     }
 

@@ -9,19 +9,14 @@ public class SPlatform extends Platform {
     private boolean wasOnPlat;
 
         public SPlatform(double a, double b)   {
-            super(2,2);
-            setLocation(a, b);
+            super(a,b);
             setSize((int)(Math.random()*30 + 50), 20);
             setJumpLimit(1);
             setID(4);
         }
         public SPlatform(double a, double b, double v)   {
-            super(2,2);
-            setLocation(a, b);
-            setSize((int)(Math.random()*30 + 50), 20);
+            this(a,b);
             setVelocity(v, this.getYVelocity());
-            setJumpLimit(1);
-            setID(4);
         }
 
     //player height set to platform top or bottom height when colliding with top/bottom

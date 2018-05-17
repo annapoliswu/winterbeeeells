@@ -66,12 +66,25 @@ public class Display{
 
     }
 
+    //draws score on screen
     public void draw(User u){
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Times New Roman", Font.BOLD, 18));
         g.drawString("SCORE: " + u.getScore(), 10, 20);
+        g.dispose();
+
+    }
+
+    public void drawEnd(User u){
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Times New Roman", Font.BOLD, 18));
+
+        g.drawString("SCORE: " + u.getName(), Display.WINDOW_WIDTH/2, Display.WINDOW_HEIGHT/2);
+        g.drawString("SCORE: " + u.getScore(), Display.WINDOW_WIDTH/2, Display.WINDOW_HEIGHT/2 +30);
         g.dispose();
 
     }

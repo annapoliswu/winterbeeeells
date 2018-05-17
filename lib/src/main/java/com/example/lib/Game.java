@@ -34,7 +34,7 @@ public class Game{
         platforms = new ArrayList<>();
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
-        enemies.add(new Target(250,20) );
+        enemies.add(new Target(0,20) );
 
         display.getCanvas().addMouseListener(new MouseListener() {
             @Override
@@ -92,7 +92,7 @@ public class Game{
             if (targetTimer > TARGET_SPAWN_RATE )    {
                 targetTimer %= TARGET_SPAWN_RATE;
                 if(!hasTarget(enemies)) {
-                    enemies.add(new Target(250, 20));
+                    enemies.add(new Target(0, 20));
                 }
             }
 
@@ -108,6 +108,7 @@ public class Game{
             display.draw(enemies);
             display.draw(user);
             display.paintCanvas();
+            display.drawEnd(user);
 
             try {Thread.sleep( (lastLoopTime-System.nanoTime() + TARGET/1000000));}
             catch(Exception e) {}
@@ -221,7 +222,7 @@ public class Game{
         User gamePlayer = new User("PlaceHolder Name");
         game.initGame(gamePlayer);
         game.gameloop();
-        System.out.println(gamePlayer.getScore());
+       // Display.drawEnd(gamePlayer);
     }
 
 

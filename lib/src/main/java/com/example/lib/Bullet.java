@@ -14,10 +14,9 @@ public class Bullet extends Collideable {
     }
 
     public Bullet(double a, double b, double xv, double yv) {
-        super(0);
-        setLocation(a,b);
+        this(a,b);
         setVelocity(xv,yv);
-        setSize(4,4);
+
     }
 
 }

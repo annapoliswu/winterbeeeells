@@ -8,17 +8,15 @@ package com.example.lib;
 //Horizontal platform: moves horizontally, player can not go through bottom but can jump on top
 public class HPlatform extends Platform {
     public HPlatform(double a, double b)   {
-        super(2,2);
-        setLocation(a, b);
+        super(a, b);
         setSize((int)(Math.random()*30 + 50), 20);
         setJumpLimit(5);
+
     }
     public HPlatform(double a, double b, double v)   {
-        super(2,2);
-        setLocation(a, b);
-        setSize((int)(Math.random()*30 + 50), 20);
+        this(a, b);
         setVelocity(v, this.getYVelocity());
-        setJumpLimit(5);
+
     }
 
 
